@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
+</head>
+<body class="login">
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-md-6">
+                <h1>Bem-vindo ao CadastraFácil</h1>
+                <p>Com uma interface amigável, você pode facilmente adicionar, editar e excluir produtos, garantindo que seu cadastro esteja sempre atualizado.</p>
+                <img src="{{ url_for('static', filename='images/frutas.png') }}" alt="Alimentos" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <h1>Faça seu login</h1>
+
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                    <ul class="list-unstyled">
+                        {% for message in messages %}
+                            <li class="alert alert-danger">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% endwith %}
+
+                <form method="POST" action="{{ url_for('autenticar') }}">
+                    <input type="hidden" name="proxima" value="{{ proxima }}">
+                    {{ form.csrf_token }}
+
+                    <div class="form-group">
+                        {{ form.nickname.label(class="form-label") }}
+                        {{ form.nickname(class="form-control") }}
+                    </div>
+
+                    <div class="form-group">
+                        {{ form.senha.label(class="form-label") }}
+                        {{ form.senha(class="form-control") }}
+                    </div>
+
+                    <div class="form-group mt-4">
+                        {{ form.login(class="btn btn-success btn-block") }}
+                        <a class="btn btn-secondary btn-block" href="{{ url_for('index') }}">Voltar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
